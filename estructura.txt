@@ -1,0 +1,23 @@
+homelab-infrastructure/
+├── .github/
+│   └── workflows/
+│       └── lint.yml             # Validación automática de YAML / Shell scripts
+├── automation/
+│   ├── netplan/                 # Respaldos y plantillas de configuración de red
+│   │   └── 00-installer-config.yaml
+│   └── scripts/
+│       ├── 01-lvm-extend.sh     # Script para aprovechar el almacenamiento LVM
+│       ├── 02-security-ufw.sh   # Reglas de cortafuegos y hardening SSH
+│       └── 03-install-docker.sh # Despliegue de Docker Engine
+├── docker/
+│   ├── docker-compose.yml       # Orquestación de servicios
+│   ├── proxy/                   # Nginx / Traefik
+│   │   └── nginx.conf
+│   └── monitoring/              # Prometheus y Grafana
+│       └── prometheus.yml
+├── docs/
+│   └── architecture.png         # Diagrama de red/flujo
+├── .env.example                 # Variables de entorno modelo (sin contraseñas)
+├── .gitignore                   # Exclusión de claves, certificados y .env reales
+├── LICENSE
+└── README.md                    # Documento principal para los reclutadores

@@ -216,3 +216,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Secretos y credenciales
+.env
+*.pem
+*.key
+*.crt
+*.id_rsa
+*.id_ed25519
+
+# Respaldos y temporales
+*.swp
+*.bak
+*~
+.DS_Store
+
+# Datos persistentes de contenedores (si se montan localmente)
+docker/data/
+docker/grafana_data/
+docker/prometheus_data/
