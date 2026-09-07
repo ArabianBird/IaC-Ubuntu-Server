@@ -1,0 +1,53 @@
+#########################
+### Ubuntu Server 101 ###
+#########################
+
+Configuración de red declarativa: Netplan
+
+terminal:Bash
+
+/etc/netplan/00-installer-config.yaml
+
+
+<Editors>:nano
+
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.18.166/24
+      routes:
+        - to: default
+          via: 192.168.18.1
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
+
+terminal:Bash
+
+sudo netplan try
+
+
+
+################################################################
+
+UFW (Uncomplicated Firewall)
+
+terminal:Bash
+
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp comment 'SSH'
+sudo ufw allow 80/tcp comment 'HTTP'
+sudo ufw allow 443/tcp comment 'HTTPS'
+sudo ufw enable
+
+###############################################################
+
+
+
+
+
+
+
