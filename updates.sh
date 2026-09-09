@@ -17,8 +17,13 @@ echo "--- INICIO DE MANTENIMIENTO: $FECHA_ACTUAL ---" | tee -a "$LOG_FILE"
 # 1. Actualización del Sistema Base (APT)
 echo ">> [1/5] Actualizando paquetes del sistema..."
 export DEBIAN_FRONTEND=noninteractive
-apt update >> "$LOG_FILE" 2>&1
-apt upgrade -y >> "$LOG_FILE" 2>&1
+
+if ! apt update >> "$LOG_FILE" 2>&1; then
+    echo -e "\e[31m[ERROR] Falló 'apt update'. Abortando actualización de paquetes para evitar inconsistencias.\e[0m" | tee -a "$LOG_FILE"
+else
+    apt upgrade -y >> "$LOG_FILE" 2>&1
+fi
+
 apt autoremove --purge -y >> "$LOG_FILE" 2>&1
 apt autoclean -y >> "$LOG_FILE" 2>&1
 apt clean >> "$LOG_FILE" 2>&1
