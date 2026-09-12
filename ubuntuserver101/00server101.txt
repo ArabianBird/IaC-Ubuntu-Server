@@ -175,9 +175,27 @@ fi
 
 log "INFO" "================ FIN DE MANTENIMIENTO ================"
 
-##########################
+########################################################
 
 Bash
 
-chmod 770 updates.sh
-(chmod ug+x updates.sh)
+chmod 770 updates.sh   ###   (chmod ug+x updates.sh)
+
+######################################################
+
+Bash
+
+chmod +x /home/pretox/IaC-Ubuntu-Server/update01.sh
+
+sudo crontab -e 
+
+Nano
+
+0 23 * * 6 /home/pretox/IaC-Ubuntu-Server/update01.sh
+
+
+Bash
+
+sudo crontab -l
+
+######################################################
