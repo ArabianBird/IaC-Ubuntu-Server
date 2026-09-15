@@ -199,3 +199,76 @@ Bash
 sudo crontab -l
 
 ######################################################
+
+Paso 1: Crear el archivo de servicio
+
+Crea la unidad de servicio para invocar tu script:
+
+Bash
+
+sudo nano /etc/systemd/system/update01.service
+
+Pega el siguiente contenido (asegúrate de colocar tu usuario real en 
+lugar de tu_usuario):
+
+[Unit]
+Description=Servicio de Mantenimiento y Actualizacion del Servidor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/tu_usuario/IaC-Ubuntu-Server/update01.sh
+
+
+Paso 2: Crear el temporizador (Timer)
+
+Crea el temporizador con el mismo nombre que el servicio:
+
+Bash
+
+sudo nano /etc/systemd/system/update01.timer
+
+Pega esta configuración:
+
+[Unit]
+Description=Ejecutar update01 semanalmente con soporte persistente
+
+[Timer]
+OnCalendar=Sat *-*-* 23:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+
+Paso 3: Activar y arrancar el Timer
+
+1. Recarga la configuración del demonio systemd:
+
+sudo systemctl daemon-reload
+
+Habilita y arranca el temporizador (solo se activa el 
+.timer, el .service lo llamará automáticamente):
+
+sudo systemctl enable --now update01.timer
+
+
+Paso 4: Comprobación y auditoría
+
+systemctl status update01.timer
+
+systemctl list-timers --all | grep update01
+
+### Eliminar el job de Cron previo:
+Dado que Systemd ahora gestiona la tarea con persistencia, 
+recuerda abrir sudo crontab -e y borrar o comentar con # 
+la línea anterior para no duplicar ejecuciones. ###
+
+
+tu script correctamente y sin errores de sintaxis o permisos
+
+sudo systemctl start update01.service
+
+systemctl status update01.service
+tail -n 20 /var/log/mantenimiento_servidor.log
