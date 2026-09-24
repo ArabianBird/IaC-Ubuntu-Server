@@ -77,3 +77,40 @@ Paso 5: Cómo cerrar la conexión correctamente
    (o ve al menú superior: File $\rightarrow$ Close Remote Connection).
 
  - Desde la terminal integrada o CMD: Escribe exit o presiona Ctrl + D.
+
+####################################
+
+SSH without passwrod
+
+PowerShell
+
+ssh-keygen -t ed25519 -C "fernando-windows11"
+
+(A)
+
+type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh pretox@192.168.18.166 "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+
+(B)
+
+PowerShell
+type $env:USERPROFILE\.ssh\id_ed25519.pub
+
+Bash
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+nano ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+
+PowerShell
+ssh pretox@192.168.18.166
+
+sudo nano /etc/ssh/sshd_config.d/50-cloud-init.conf
+PasswordAuthentication no
+
+sudo nano /etc/ssh/sshd_config
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PubkeyAuthentication yes
+
+sudo sshd -t
+sudo systemctl restart ssh
+
